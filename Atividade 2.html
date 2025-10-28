@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Tailwind</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <header class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Painel Administrativo</h1>
+  </header>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" role="list">
+    <div class="bg-white p-4 rounded shadow" role="article" aria-label="CPU Traffic">
+      <h2 class="text-lg font-semibold">CPU Traffic</h2>
+      <p class="text-2xl text-red-500" aria-live="polite">90%</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow" role="article" aria-label="Likes">
+      <h2 class="text-lg font-semibold">Likes</h2>
+      <p class="text-2xl text-blue-500">41,410</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow" role="article" aria-label="Sales">
+      <h2 class="text-lg font-semibold">Sales</h2>
+      <p class="text-2xl text-green-500">760</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow" role="article" aria-label="New Members">
+      <h2 class="text-lg font-semibold">New Members</h2>
+      <p class="text-2xl text-purple-500">2,000</p>
+    </div>
+  </div>
+
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h2 class="text-xl font-semibold mb-4">Resumo Mensal de Vendas</h2>
+    <div class="w-full h-64">
+      <canvas id="salesChart" class="w-full h-full" aria-label="Gráfico de vendas mensais" role="img"></canvas>
+    </div>
+    <noscript>
+      <div class="text-sm text-gray-500">O gráfico não pode ser exibido sem JavaScript.</div>
+    </noscript>
+  </div>
+
+  <div class="bg-white p-6 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">Meta de Conclusão</h2>
+    <ul class="space-y-2">
+      <li>Add ao Carrinho: <progress value="160" max="200" class="w-full"></progress></li>
+      <li>Compra Finalizada: <progress value="310" max="400" class="w-full"></progress></li>
+      <li>Visita Página Premium: <progress value="480" max="800" class="w-full"></progress></li>
+      <li>Envio de Contato: <progress value="250" max="500" class="w-full"></progress></li>
+    </ul>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const canvas = document.getElementById('salesChart');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+          datasets: [{
+            label: 'Vendas (R$)',
+            data: [5332.40, 6210.00, 8391.20, 7410.00, 9391.20, 7210.00],
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75,192,192,0.08)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top' },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return 'R$ ' + ctx.formattedValue;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              ticks: {
+                callback: function(value) { return 'R$ ' + value; }
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

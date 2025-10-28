@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <title>Loja - Bootstrap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card-img-top { height: 200px; object-fit: cover; }
+    .badge-timer { min-width: 140px; text-align: center; }
+    .rating { letter-spacing: 2px; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand" href="#">🛍️ logodaloja</a>
+    <div class="collapse navbar-collapse">
+      <form class="d-flex ms-auto" role="search">
+        <input class="form-control me-2" type="search" placeholder="Busque pelo produto que você desejar" aria-label="Buscar">
+        <button class="btn btn-outline-light" type="submit">Buscar</button>
+      </form>
+      <button class="btn btn-success ms-3">🛒 Carrinho (0)</button>
+    </div>
+  </nav>
+
+  <!-- Ofertas do Dia -->
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold">🔥 Ofertas do Dia</h2>
+      <span id="timerBadge" class="badge bg-danger fs-6 badge-timer">Termina em 00:03:42</span>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <!-- Produto 1 -->
+      <div class="col">
+        <div class="card h-100 shadow-sm position-relative">
+          <div class="position-absolute top-0 start-0 bg-success text-white px-2 py-1 rounded-end">Exclusivo</div>
+          <img src="https://acdn-us.mitiendanube.com/stores/004/332/990/products/143_6_11zon-0a288eeb60685da7f517227435134065-1024-1024.webp" class="card-img-top" alt="Fone Bluetooth">
+          <div class="card-body">
+            <h5 class="card-title">Fone Bluetooth</h5>
+            <p class="card-text">R$ 129,90 no cartão<br><small class="text-muted">R$ 119,90 no boleto</small></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-warning rating">★★★★★</span>
+              <a href="#" class="btn btn-primary">COMPRAR</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 2 -->
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <img src="https://rommanelio.vtexassets.com/arquivos/ids/1893183-800-auto?v=638954470492530000&width=800&height=auto&aspect=true" class="card-img-top" alt="Relógio Digital">
+          <div class="card-body">
+            <h5 class="card-title">Relógio Digital</h5>
+            <p class="card-text">R$ 89,90 no cartão<br><small class="text-muted">R$ 84,90 no boleto</small></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-warning rating">★★★★☆</span>
+              <a href="#" class="btn btn-primary">COMPRAR</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 3 -->
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <img src="https://lojaibyte.vteximg.com.br/arquivos/ids/407116-1200-1200/caixa-de-som-jbl-boombox-3-bluetooth-camuflado-1-min.jpg?v=638101654082500000" class="card-img-top" alt="Caixa de Som Portátil">
+          <div class="card-body">
+            <h5 class="card-title">Caixa de Som Portátil</h5>
+            <p class="card-text">R$ 149,90 no cartão<br><small class="text-muted">R$ 139,90 no boleto</small></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-warning rating">★★★★★</span>
+              <a href="#" class="btn btn-primary">COMPRAR</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    (function () {
+      const badge = document.getElementById('timerBadge');
+      let remaining = 3 * 60 + 42; // segundos
+
+      function formatTime(s) {
+        const hh = Math.floor(s / 3600);
+        const mm = Math.floor((s % 3600) / 60);
+        const ss = s % 60;
+        if (hh > 0) {
+          return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+        } else {
+          return `${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+        }
+      }
+
+      function tick() {
+        if (remaining <= 0) {
+          badge.textContent = 'Oferta encerrada';
+          badge.classList.remove('bg-danger');
+          badge.classList.add('bg-secondary');
+          clearInterval(intervalId);
+          return;
+        }
+        badge.textContent = 'Termina em ' + formatTime(remaining);
+        remaining--;
+      }
+
+      tick();
+      const intervalId = setInterval(tick, 1000);
+    })();
+  </script>
+</body>
+</html>
